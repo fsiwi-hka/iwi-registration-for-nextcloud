@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+Third Page of the IWI Account Registration
+Author: Marcel Rettig
+V0.1 16.12.2020: Initial Creation
+-->
+<html lang="de">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<head>
+    <title>Fachschaft IWI - Registrierung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet"></link>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="https://iwi-hka.de/favicon.ico">
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            Fachschaft IWI<br /><span>Registrierung</span> <span class="stepper">3/3</span>
+        </h1>
+
+        <h2>Registrierung erfolgreich</h2>
+
+        <p>
+            Du hast es fast geschafft! Dein Account wurde erfolgreich angelegt. Wir haben dir eine Mail geschickt, in welcher ein Link zum Setzten deines Passworts ist. Der Link zum Setzten des Passworts ist 24 Stunden gültig. Schau auch
+            in deinem Spam-Ordner nach, wenn du die E-Mail nicht findest. Solltest du nach einer Stunde noch keine E-Mail erhalten haben, kannst du dich gerne an <a href="https://iwi-hka.de/scripts/email.php?address=admin">unsere Admins</a>            wenden.
+        </p>
+
+        <p>
+            <a href="https://nx17970.your-storageshare.de">&rarr; Zur Nextcloud der Fachschaft</a>
+        </p>
+    </div>
+    <footer>
+        &copy; <span id="year"></span> Fachschaft IWI | <a href="https://iwi-hka.de/impressum/">Impressum</a>
+    </footer>
+    <script>
+        document.getElementById("year").innerHTML = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

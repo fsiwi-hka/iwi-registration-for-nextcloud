@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--
+Second Page of the IWI Account Registration
+Author: Marcel Rettig
+V0.1 16.12.2020: Initial Creation
+-->
+<html lang="de">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<head>
+    <title>Fachschaft IWI - Registrierung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet"></link>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="https://iwi-hka.de/favicon.ico">
+</head>
+
+<body>
+    <div class="container">
+        <div class="spinner-container hidden" id="spinner">
+            <div class="spinner"></div>
+        </div>
+        <h1>
+            Fachschaft IWI<br /><span>Registrierung</span> <span class="stepper">2/3</span>
+        </h1>
+
+        <p>
+            Gib bitte nun deine RZ-Zugangsdaten(ohne @h-ka.de) ein. Wähle außerdem einen Anzeigenamen für die Fachschafts-Dienste. Diesen Anzeigenamen kannst du später jederzeit ändern. Zuletzt benötigen wir noch eine gültige E-Mail-Adresse, an der wir die E-Mail zur Bestätigung
+            deiner Registrierung senden können.
+        </p>
+
+        <p id="errortext" class="hidden">
+            <strong>Fehler bei der Registrierung</strong><br />
+            <span id="explainer"></span>
+        </p>
+
+        <div class="login_field">
+            <form id="registration">
+                <div class="group">
+                    <input type="text" id="user" name="user" value="" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label class="material-label" for="name">RZ-Benutzername</label>
+                </div>
+
+                <div class="group">
+                    <input type="password" id="pw" name="pw" value="" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label class="material-label" for="pw">RZ-Passwort</label>
+                </div>
+
+                <div class="group">
+                    <input type="text" id="dn" name="dn" value="" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label class="material-label" for="dn">Anzeigename</label>
+                </div>
+
+                <div class="group">
+                    <input type="email" id="email" name="email" value="" required/>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label class="material-label" for="email">E-Mail</label>
+                </div>
+
+                <div class="group">
+                    <input type="submit" value="Registrieren" />
+                </div>
+            </form>
+            <p><a href="/">&larr; Zurück zur Datenschutzbelehrung</a></p>
+        </div>
+    </div>
+    <footer>
+        &copy; <span id="year"></span> Fachschaft IWI | <a href="https://iwi-hka.de/impressum/">Impressum</a>
+    </footer>
+    <script>
+        function setErrorText(reason) {
+            switch (reason) {
+                case "CallToIwiApiFailed":
+                    errortext = "Der Aufruf der IWI API ist nicht " +
+                        "fehlerfrei abgelaufen. Bitte versichere dich," +
+                        " dass die eingegeben Daten vollständig und " +
+                        "richtig sind. Auch ein Fehler aufseiten der " +
+                        "Hochschulinfrastuktur ist nicht " +
+                        "ausgeschlossen. Ein Login-Versuch an " +
+                        "Hochschuldiensten kann dir hier Auskunft " +
+                        "geben.";
+                    break;
+                case "CallToNextcloudApiFailed":
+                    errortext = "Der Aufruf der API ist nicht " +
+                        "fehlerfrei abgelaufen. Bitte versichere dich," +
+                        " dass die eingegeben Daten vollständig und " +
+                        "richtig sind. Auch ein Fehler aufseiten der " +
+                        "Hochschulinfrastuktur ist nicht " +
+                        "ausgeschlossen. Ein Login-Versuch an " +
+                        "Hochschuldiensten kann dir hier Auskunft " +
+                        "geben.";
+                    break;
+                case "NotAStudent":
+                    errortext = "Du scheinst kein Student zu sein. Wenn es sich " +
+                        "hierbei um einen Fehler handelt, kontaktiere bitte unsere Admins.";
+                    break;
+                case "NotFromIwiFaculty":
+                    errortext = "Du scheinst kein Student der Fakultät IWI zu sein. Wenn es sich " +
+                        "hierbei um einen Fehler handelt, kontaktiere bitte unsere Admins.";
+                    break;
+                case "UsernameInUse":
+                    errortext = "Das verwendete Kürzel würde bereits registriert.";
+                    break;
+                case "EmailInUse":
+                    errortext = "Die Emailadresse wird bereits verwendet.";
+                    break;
+                case "AlreadyRegistered":
+                    errortext = "Mit diesem Hochschulkonto wurde " +
+                        "bereits ein Nutzerkonto erstellt. Wenn du glaubst, dass " +
+                        "hier ein Fehler vorliegt oder du dich nicht " +
+                        "mehr an deinen verwendeten Nutzernamen " +
+                        "bzw. Email erinnern kannst, kannst du dich " +
+                        "an einen <a href=\"https://iwi-hka.de" +
+                        "/scripts/email.php?address=admin\"> " +
+                        "Admin</a> wenden.";
+                    break;
+                default:
+                    errortext = "Ein unbekannter Fehler ist aufgetreten. " +
+                        " Bitte wende dich an " +
+                        "einen <a href=\"https://iwi-hka.de" +
+                        "/scripts/email.php?address=admin\">Admin</a>.";
+
+            }
+            document.getElementById("explainer").innerHTML = errortext;
+            errorTextDisplay(true);
+        }
+
+        function errorTextDisplay(toggleShow) {
+            var element = document.getElementById("errortext");
+            if (toggleShow && element.classList.contains("hidden")) {
+                element.classList.remove("hidden")
+            } else {
+                element.classList.add("hidden")
+            }
+        }
+
+        function spinnerDisplay(toggleShow) {
+            var element = document.getElementById("spinner");
+            if (toggleShow && element.classList.contains("hidden")) {
+                element.classList.remove("hidden")
+            } else {
+                element.classList.add("hidden")
+            }
+        }
+
+
+        function processForm(e) {
+            if (e.preventDefault) e.preventDefault();
+
+            let data =
+                "user=" + document.getElementById("user").value +
+                "&pw=" + document.getElementById("pw").value +
+                "&dn=" + document.getElementById("dn").value +
+                "&email=" + document.getElementById("email").value;
+
+            // don't display error and overlay with spinner
+            errorTextDisplay(false);
+            spinnerDisplay(true);
+
+            fetch("cgi-bin/register.py", {
+                    method: "post",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: data
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.reason === "Success") {
+                        window.location.href = "/success.html";
+                    } else {
+                        spinnerDisplay(false);
+                        setErrorText(data.reason)
+                    }
+                });
+
+            // You must return false to prevent the default form behavior
+            return false;
+        }
+
+        var form = document.getElementById('registration');
+        if (form.attachEvent) {
+            form.attachEvent("submit", processForm);
+        } else {
+            form.addEventListener("submit", processForm);
+        }
+
+        // copyright
+        document.getElementById("year").innerHTML = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
