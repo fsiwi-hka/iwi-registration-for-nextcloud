@@ -1,5 +1,5 @@
 # API Links
-IWI_API = "https://www.iwi.hs-karlsruhe.de/iwii/REST/credential/v2/info"
+IWI_API = "https://api.against_which_you_want_to_verify"
 NEXTCLOUD_API = "https://domainnameOfNextcloud/ocs/v1.php/cloud"
 NEXTCLOUD_API_USER = "insert_admin"
 NEXTCLOUD_API_PW = "PW_of_Insert_Admin"
