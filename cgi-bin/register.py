@@ -8,13 +8,14 @@ import sys
 import requests
 import hashlib
 
-
 #cgitb.enable(display=0, logdir="/var/log/webauth/")
 
 form = cgi.FieldStorage()
 
 
-user = form.getvalue('user').lowercase()
+user = form.getvalue('user').lower()
+user.lowercase()
+
 pw = form.getvalue('pw')
 displayname = str(form.getvalue('dn')).strip()
 email = form.getvalue('email')
