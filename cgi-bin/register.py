@@ -14,8 +14,6 @@ form = cgi.FieldStorage()
 
 
 user = form.getvalue('user').lower()
-user.lowercase()
-
 pw = form.getvalue('pw')
 displayname = str(form.getvalue('dn')).strip()
 email = form.getvalue('email')
