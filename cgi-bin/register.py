@@ -14,7 +14,7 @@ import hashlib
 form = cgi.FieldStorage()
 
 
-user = form.getvalue('user')
+user = form.getvalue('user').lowercase()
 pw = form.getvalue('pw')
 displayname = str(form.getvalue('dn')).strip()
 email = form.getvalue('email')
