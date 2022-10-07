@@ -1,4 +1,4 @@
-#! /usr/bin/python3.7
+#! /usr/bin/python3
 from parameters import *
 import base64
 import cgi
