@@ -9,7 +9,7 @@
 1. Install dependencies: `pip install -r requirements.txt`
 2. Run tests: `IWI_API_USERNAME=[USERNAME] -e IWI_API_PASSWORD=[PASSWORD] python3 ./cgi-bin/register_test.py`
 
-   - \_Run tests in Docker: `docker build -t iwi-python-test ./cgi-bin && docker run --rm -e IWI_API_USERNAME=[USERNAME] -e IWI_API_PASSWORD=[PASSWORD] iwi-python-test`
+   - Run tests in Docker: `docker build -t iwi-python-test ./cgi-bin && docker run --rm -e IWI_API_USERNAME=[USERNAME] -e IWI_API_PASSWORD=[PASSWORD] iwi-python-test`
 
 ### Parameters.py
 
