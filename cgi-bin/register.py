@@ -7,6 +7,7 @@ import json
 import sys
 import requests
 import hashlib
+from register import getBearerToken, callRESTapi
 
 #cgitb.enable(display=0, logdir="/var/log/webauth/")
 
@@ -44,15 +45,6 @@ def buildbase64auth(user_name, password):
     base64_bytes = base64.b64encode(message_bytes)
     return base64_bytes.decode('ascii')
 
-
-def callRESTapi(auth, link):
-    # Create Api request
-    headers = {
-        'Authorization': 'Basic ' + auth
-    }
-    return requests.request("GET", link, headers=headers)
-
-
 def checkresponseIWIAPI(response):
     if response.status_code != 200:
         respond(response.status_code, "CallToIwiApiFailed")
@@ -71,7 +63,8 @@ def responseIfUserExistsNextcloud(user_name, auth, url, header):
 
 
 # Holt Daten von der IWI REST-API
-response_iwi = callRESTapi(buildbase64auth(user, pw), IWI_API)
+bearer = getBearerToken(user, pw, IWI_API)
+response_iwi = callRESTapi(bearer, IWI_API)
 checkresponseIWIAPI(response_iwi)
 response_iwi = json.loads(response_iwi.text)
 
