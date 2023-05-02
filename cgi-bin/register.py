@@ -7,7 +7,7 @@ import json
 import sys
 import requests
 import hashlib
-from register import getBearerToken, callRESTapi
+from iwi_api import getBearerToken, callRESTapi
 
 #cgitb.enable(display=0, logdir="/var/log/webauth/")
 
