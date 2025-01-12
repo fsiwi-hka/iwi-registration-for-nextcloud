@@ -9,7 +9,7 @@ V0.1 16.12.2020: Initial Creation
 
 <head>
     <title>Fachschaft IWI - Registrierung</title>
-    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <link rel="shortcut icon" href="https://iwi-hka.de/favicon.ico">
 </head>
@@ -39,7 +39,7 @@ V0.1 16.12.2020: Initial Creation
                     <input type="text" id="user" name="user" value="" required/>
                     <span class="highlight"></span>
                     <span class="bar"></span>
-                    <label class="material-label" for="name">RZ-Benutzername</label>
+                    <label class="material-label" for="user">RZ-Benutzername</label>
                 </div>
 
                 <div class="group">
@@ -154,10 +154,10 @@ V0.1 16.12.2020: Initial Creation
             if (e.preventDefault) e.preventDefault();
 
             let data =
-                "user=" + document.getElementById("user").value +
-                "&pw=" + document.getElementById("pw").value +
-                "&dn=" + document.getElementById("dn").value +
-                "&email=" + document.getElementById("email").value;
+                "user=" + encodeURIComponent(document.getElementById("user").value) +
+                "&pw=" + encodeURIComponent(document.getElementById("pw").value) +
+                "&dn=" + encodeURIComponent(document.getElementById("dn").value) +
+                "&email=" + encodeURIComponent(document.getElementById("email").value);
 
             // don't display error and overlay with spinner
             errorTextDisplay(false);
@@ -169,14 +169,24 @@ V0.1 16.12.2020: Initial Creation
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     body: data
-                }).then(response => response.json())
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
                 .then(data => {
                     if (data.reason === "Success") {
                         window.location.href = "/success.html";
                     } else {
                         spinnerDisplay(false);
-                        setErrorText(data.reason)
+                        setErrorText(data.reason);
                     }
+                })
+                .catch(error => {
+                    spinnerDisplay(false);
+                    setErrorText("Ein unbekannter Fehler ist aufgetreten. Bitte wende dich an einen Admin.");
+                    console.error('There was a problem with the fetch operation:', error);
                 });
 
             // You must return false to prevent the default form behavior
